@@ -42,7 +42,7 @@ class SlideController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate(request(),[
+        $request->validate([
             'title'=>'required|min:3|max:100',
 
         ]);
@@ -52,11 +52,12 @@ class SlideController extends Controller
             $slide->description=$request->input('description');
             $slide->status=$request->input('status');
             $slide->link=$request->input('link');
-            $slide->image_id=$request->input('image_id');
+            $slide->image_id=$request->input('photo_id');
             $slide->save();
             Session::flash('slide_success','با موفقیت ایجاد شد');
             return redirect('admin/slides');
         }catch (\Exception $er){
+            return $er;
             Session::flash('slide_error','خطا در ذخیره سازی');
             return redirect('admin/slides/create');
         }
@@ -94,7 +95,7 @@ class SlideController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $this->validate(request(),[
+        $request->validate([
             'title'=>'required|min:3|max:100',
 
         ]);
@@ -104,7 +105,7 @@ class SlideController extends Controller
             $slide->description=$request->input('description');
             $slide->link=$request->input('link');
             $slide->link=$request->input('status');
-            $slide->iamge->sync($request->input('image_id'));
+            $slide->image->sync($request->input('image_id'));
             $slide->save();
             Session::flash('slide_success','با موفقیت ایجاد شد');
             return redirect('admin/slides');

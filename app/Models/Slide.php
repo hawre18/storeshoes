@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Slide extends Model
 {
-    public function images(){
+    public function image(){
         return $this->belongsTo(Image::Class);
     }
 }

@@ -51,8 +51,8 @@
                                                 <td class="p-3 dark:text-zinc-100" data-field="id" style="width: 80px">{{$loop->index+1}}</td>
                                                 <td class="p-3 dark:text-zinc-100" data-field="name">{{$row->title}}</td>
                                                 <td class="p-3 dark:text-zinc-100" data-field="age">{{$row->description}}</td>
-                                                <td class="p-3 dark:text-zinc-100" data-field="age">{{$slides->photo->path}}</td>
-                                                @if($slide->status==0)
+                                                <td class="p-3 dark:text-zinc-100 img-thumbnail" data-field="age"><img class="img-thumbnail" src="{{asset('storage/photos/'.$row->image->path)}}"/></td>
+                                                @if($row->status==0)
                                                     <td class="p-s"><span class="label label-danger">منتشر نشده</span></td>
                                                 @else
                                                     <td class="p-3"><span class="label label-success">منتشر شده</span></td>
@@ -61,23 +61,20 @@
                                                     <a class="btn btn-outline-secondary btn-sm edit" title="ویرایش" href="{{route('slides.edit',$row->id)}}">
                                                         <i class="fas fa-pencil-alt"></i>
                                                     </a>
-                                                    <a class="btn btn-outline-secondary btn-sm edit" title="حذف" href="{{route('slides.delete',$row->id)}}">
+                                                    <a class="btn btn-outline-secondary btn-sm" title="حذف" href="{{route('slides.delete',$row->id)}}">
                                                         <i class="fas fa-trash-alt"></i>
                                                     </a>
-                                                    @if($slide->status==0)
-                                                        <a class="p-3 dark:text-zinc-100" title="منتشر کردن" href="{{route('slides.publish',[$slide->id,$status=1])}}">
-                                                            <i class="fas fa-display"></i>
+                                                    @if($row->status==0)
+                                                        <a class="btn btn-outline-secondary btn-sm" title="منتشر کردن" href="{{route('slides.publish',[$row->id,$status=1])}}">
+                                                            <i class="fas fa-upload"></i>
                                                         </a>
                                                     @else
-                                                        <a class="btn btn-outline-secondary btn-sm edit" title="منقضی کردن" href="{{route('slides.publish',[$slide->id,$status=0])}}">
+                                                        <a class="btn btn-outline-secondary btn-sm" title="منقضی کردن" href="{{route('slides.publish',[$row->id,$status=0])}}">
                                                             <i class="fas fa-turn-down"></i>
                                                         </a>
                                                     @endif
                                                 </td>
                                             </tr>
-                                            @if(count($row->childrenRecursive)>0)
-                                                @include('index.admin.v1.category.subCategory',['categories'=>$row->childrenRecursive , 'level'=>1 ])
-                                            @endif
                                         @endforeach
                                         </tbody>
 

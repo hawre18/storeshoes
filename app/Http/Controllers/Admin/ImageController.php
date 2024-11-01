@@ -12,11 +12,13 @@ class ImageController extends Controller
     public function upload(Request $request){
 
 
+
+
         $uploadedFile=$request->file('file');
         $filename=time().$uploadedFile->getClientOriginalName();
         $original_name=$uploadedFile->getClientOriginalName();
-        Storage::disk('local')->putFileas(
-            'public/photos',$uploadedFile,$filename
+        Storage::disk('local')->putFileAs(
+            'photos',$uploadedFile,$filename
         );
         $image=new Image();
         $image->name=$original_name;

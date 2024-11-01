@@ -44,7 +44,7 @@
                         </ul>
                     </div>
                 @endif
-                <form method="POST" action="{{route('slides.store')}}">
+                <form method="POST" action="{{route('slides.store')}}" enctype="multipart/form-data">
                     @csrf
                     <div class="grid grid-cols-1">
                         <div class="card dark:bg-zinc-800 dark:border-zinc-600">
@@ -61,7 +61,7 @@
                                     <input name="description" value="{{old('description')}}" class="w-full rounded border-gray-100 placeholder:text-sm focus:border focus:border-violet-500 focus:ring-0 dark:bg-zinc-700/50 dark:border-zinc-600 dark:placeholder:text-zinc-100 dark:text-zinc-100" type="text" placeholder="فقط حروف انگلیسی" id="example-text-input">
                                 </div>
                                 <div class="mb-4">
-                                    <label for="example-text-input" class="block font-medium text-gray-700 dark:text-gray-100 mb-2">متن اصلی</label>
+                                    <label for="example-text-input" class="block font-medium text-gray-700 dark:text-gray-100 mb-2">لینک</label>
                                     <input name="link" value="{{old('link')}}" class="w-full rounded border-gray-100 placeholder:text-sm focus:border focus:border-violet-500 focus:ring-0 dark:bg-zinc-700/50 dark:border-zinc-600 dark:placeholder:text-zinc-100 dark:text-zinc-100" type="text" placeholder="فقط حروف انگلیسی" id="example-text-input">
                                 </div>
                                 <div class="mt-8">
@@ -91,7 +91,7 @@
                                     <div class="grid grid-cols-12 gap-5">
                                         <div class="col-span-12 lg:col-span-4">
                                             <div class="mb-3">
-                                                <button type="submit" onclick="sliderGallery()" class="btn active:bg-green-600">ثبت</button>
+                                                <button type="submit" class="btn active:bg-green-600">ثبت</button>
                                             </div>
                                         </div>
                                     </div>
@@ -108,7 +108,6 @@
     <script type="text/javascript" src="{{asset('/assets/admin/v1/js/dropzone.js')}}"></script>
     <script>
         Dropzone.autoDiscover=false;
-        var slidesGallery=[]
         var drop=new Dropzone('#photo',{
             addRemoveLinks:true,
             url:"{{route('images.upload')}}",
