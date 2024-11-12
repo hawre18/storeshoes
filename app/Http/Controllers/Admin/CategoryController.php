@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\AttributeGroup;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -118,6 +119,51 @@ class CategoryController extends Controller
 
     }
 
+    public function indexSetting($id){
+        if(View::exists('index.admin.v1.category.setting')){
+            $category=Category::findorfail($id);
+            $attributeGroups=AttributeGroup::all();
+            return view('index.admin.v1.category.setting',compact(['category','attributeGroups']));
+        }else{
+            abort(Response::HTTP_NOT_FOUND);
+        }
+    }
+    public function Setting(Request $request,$id){
+        try{
+            $category=Category::findorfail($id);
+            $category->attributeGroups()->sync($request->attributeGroups);
+            $category->save();
+            Session::flash('category_success','عملیات با موفقیت انجام شد');
+            return redirect()->to('admin/categories');}
+        catch (\Exception $m){
+            Session::flash('category_error','خطایی در ثبت به وجود آمده لطفا مجددا تلاش کنید');
+            return redirect('/admin/categories');
+        }
+    }
+    public function apiIndex()
+    {
+        $categories=Category::with('childrenRecursive')
+            ->where('parent_id',null)
+            ->get();
+        $response=[
+            'categories'=>$categories
+        ];
+        return response()->json($response,200);
+
+    }
+    public function apiIndexAttribute(Request $request)
+    {
+        $categories=$request->all();
+        $attributeGroup=AttributeGroup::with('attributeValue','categories')
+            ->whereHas('categories',function ($q) use ($categories){
+                $q->whereIn('categories.id',$categories);
+            })->get();
+        $response=[
+            'attributes'=>$attributeGroup
+        ];
+        return response()->json($response,200);
+
+    }
     /**
      * Remove the specified resource from storage.
      */

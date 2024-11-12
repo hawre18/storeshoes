@@ -60,6 +60,9 @@
                                                 <a class="btn btn-outline-secondary btn-sm edit" title="حذف" href="{{route('categories.delete',$row->id)}}">
                                                     <i class="fas fa-trash-alt"></i>
                                                 </a>
+                                                <a class="btn btn-outline-secondary btn-sm edit" title="ایجاد ویژگی" href="{{route('index.setting',$row->id)}}">
+                                                    <i class="fas fa-box-open"></i>
+                                                </a>
                                             </td>
                                         </tr>
                                         @if(count($row->childrenRecursive)>0)

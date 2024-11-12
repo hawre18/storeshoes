@@ -11,6 +11,9 @@
             <a class="btn btn-outline-secondary btn-sm edit" title="حذف" href="{{route('categories.delete',$sub_category->id)}}">
                 <i class="fas fa-trash-alt"></i>
             </a>
+            <a class="btn btn-outline-secondary btn-sm edit" title="ایجاد ویژگی" href="{{route('index.setting',$sub_category->id)}}">
+                <i class="fas fa-box-open"></i>
+            </a>
         </td>
     </tr>
     @if(count($sub_category->childrenRecursive)>0)

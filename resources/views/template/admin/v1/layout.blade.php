@@ -187,9 +187,10 @@
 <script src="{{asset('assets/admin/v1/js/flatpicker_fa.js')}}"></script>
 <!-- init js -->
 <script src="{{asset('assets/admin/v1/js/pages/form-advanced.init.js')}}"></script>
-@yield('scripts')
+
 
 <script src="{{asset('assets/admin/v1/js/app.js')}}"></script>
+@yield('scripts')
 </body>
 
 </html>

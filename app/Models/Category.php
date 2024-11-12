@@ -15,4 +15,7 @@ class Category extends Model
     {
         return $this->children()->with('childrenRecursive');
     }
+    public function attributeGroups(){
+        return $this->belongsToMany(AttributeGroup::class,'attributeGroup_category','category_id','attributeGroup_id');
+    }
 }
