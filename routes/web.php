@@ -31,6 +31,7 @@ Route::group(['prefix'=>'admin','namespace'=>'App\Http\Controllers\Admin'],funct
     Route::resource('attribute-values','AttributeValueController');
     Route::get('attribute-values.delete/{id}','AttributeValueController@delete')->name('attribute-values.delete');
     Route::resource('products','ProductController');
+    Route::get('products.delete/{id}','ProductController@delete')->name('products.delete');
 });
 Route::get('/', function () {
     return view('index.user.v1.index');

@@ -6,52 +6,28 @@
                         <div class="mb-2">
                             <label for="choices-single-groups" class="form-label font-medium text-13 text-gray-500 dark:text-zinc-100">دسته بندی محصول</label>
                         </div>
-                        <select class="choice_place" data-trigger id="choices-multiple-default" name="categories[]" multiple v-model="categories_selected" @change="onChange($event,null)">
+                        <select name="categories[]" multiple v-model="categories_selected" @change="onChange($event,null)">
                             <option v-for="category in categories" :value="category.id" >{{category.name}}</option>
                         </select>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="mt-8">
-            <div class="grid grid-cols-12 gap-5">
-                <div class="col-span-12 lg:col-span-4">
-                    <div class="mb-3">
-                        <div class="mb-2">
-                            <label for="choices-single-groups" class="form-label font-medium text-13 text-gray-500 dark:text-zinc-100">برند محصول</label>
-                        </div>
-                        <select name="brand" >
-                            <option v-if="!product" v-for="brand in brands" :value="brand.id">{{brand.title}}</option>
-                            <option v-if="product" v-for="brand in brands" :value="brand.id" :selected="product.brand.id===brand.id">{{brand.title}}</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-        </div>
+
         <div v-if="flag" class="mt-8">
             <div v-for="(attribute,index) in attributes" class="grid grid-cols-12 gap-5">
                 <div class="col-span-12 lg:col-span-4">
                     <div class="mb-3">
                         <div class="mb-2">
-                            <label for="choices-single-groups" class="form-label font-medium text-13 text-gray-500 dark:text-zinc-100">ویژگی {{attribute.title}}</label>
+                            <label  class="form-label font-medium text-13 text-gray-500 dark:text-zinc-100">ویژگی {{attribute.title}}</label>
                         </div>
                         <select @change="addAttribute($event,index)">
                             <option>انتخاب کنید</option>
                             <option v-if="!product" v-for="attributeValue in attribute.attribute_value" :value="attributeValue.id" >{{attributeValue.title}}</option>
-                            <option v-if="product" v-for="attributeValue in attribute.attribute_value" :value="attributeValue.id" :selected="product.attribute_values[index].id==attributeValue.id">{{attributeValue.title}}</option>
+                            <option v-if="product" v-for="attributeValue in attribute.attribute_value" :value="attributeValue.id" :selected="product.attributeValues[index].id==attributeValue.id">{{attributeValue.title}}</option>
                         </select>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div v-if="flag">
-            <div class="form-group" v-for="(attribute,index) in attributes">
-                <label>ویژگی {{attribute.title}}</label>
-                <select class="form-control" @change="addAttribute($event,index)">
-                    <option>انتخاب کنید</option>
-                    <option v-if="!product" v-for="attributeValue in attribute.attribute_value" :value="attributeValue.id" >{{attributeValue.title}}</option>
-                    <option v-if="product" v-for="attributeValue in attribute.attribute_value" :value="attributeValue.id" :selected="product.attribute_values[index].id==attributeValue.id">{{attributeValue.title}}</option>
-                </select>
             </div>
         </div>
         <input type="hidden" name="attributes[]" :value="computedAttribute">
@@ -68,7 +44,7 @@ export default {
             computedAttribute:[]
         }
     },
-    props:['brands','product'],
+    props:['product'],
     mounted(){
         axios.get('/api/categories').then(res=> {
             console.log(res);
@@ -80,12 +56,12 @@ export default {
             for (var i=0;i<this.product.categories.length;i++){
                 this.categories_selected.push(this.product.categories[i].id)
             }
-            for (var i=0;i<this.product.attribute_values.length;i++){
+            for (var i=0;i<this.product.attributeValues.length;i++){
                 this.selectedAttribute.push({
                     'index':i,
-                    'value':this.product.attribute_values[i].id
+                    'value':this.product.attributeValues[i].id
                 })
-                this.computedAttribute.push(this.product.attribute_values[i].id)
+                this.computedAttribute.push(this.product.attributeValues[i].id)
             }
             const load='ok'
             this.onChange(null,load);
