@@ -10,7 +10,7 @@
                 <div class="wrap">
                     <div class="tf-product-info-item">
                         <div class="image">
-                            <img src="{{asset('assets/user/v1/images/products/orange-1.jpg')}}" alt="">
+                            <img src="" alt="">
                         </div>
                         <div class="content">
                             <a href="product-detail.html">زیرپوش آجدار آدیداس</a>
@@ -333,43 +333,20 @@
     <div class="tf-slideshow slider-effect-fade position-relative">
         <div class="swiper tf-sw-slideshow" data-preview="1" data-mobile="1" data-space="0" data-loop="true" data-auto-play="false" data-delay="0" data-speed="1000">
             <div class="swiper-wrapper">
+                @foreach(App\Models\Slide::with('image')->where('status',1)->get() as $slider)
                 <div class="swiper-slide">
                     <div class="wrap-slider">
-                        <img src="{{asset('assets/user/v1/images/slider/fashion-slideshow-01.jpg')}}" alt="fashion-slideshow">
+                        <img src="{{asset('storage/photos/'.$slider->image->path)}}" alt="fashion-slideshow">
                         <div class="box-content">
                             <div class="container">
                                 <h1 class="fade-item fade-item-1">لباس های <br>جذاب</h1>
                                 <p class="fade-item fade-item-2">ما همیشه به فکر زیبایی و جذابیت شما هستیم !</p>
-                                <a href="shop-default.html" class="fade-item fade-item-3 tf-btn btn-fill animate-hover-btn btn-xl radius-3"><span>مجموعه فروشگاه</span><i class="icon icon-arrow-right"></i></a>
+                                <a href="{{$slider->link}}" class="fade-item fade-item-3 tf-btn btn-fill animate-hover-btn btn-xl radius-3"><span>مجموعه فروشگاه</span><i class="icon icon-arrow-right"></i></a>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="swiper-slide">
-                    <div class="wrap-slider">
-                        <img src="{{asset('assets/user/v1/images/slider/fashion-slideshow-02.jpg')}}" alt="fashion-slideshow">
-                        <div class="box-content">
-                            <div class="container">
-                                <h1 class="fade-item fade-item-1">استایل <br class="md-hidden">ساده</h1>
-                                <p class="fade-item fade-item-2">ما همیشه به فکر زیبایی و جذابیت شما هستیم !</p>
-                                <a href="shop-default.html" class="fade-item fade-item-3 tf-btn btn-fill animate-hover-btn btn-xl radius-3"><span>مجموعه فروشگاه</span><i class="icon icon-arrow-right"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="swiper-slide">
-                    <div class="wrap-slider">
-                        <img src="{{asset('assets/user/v1/images/slider/fashion-slideshow-03.jpg')}}" alt="fashion-slideshow">
-                        <div class="box-content">
-                            <div class="container">
-                                <h1 class="fade-item fade-item-1">لباس های <br>جذاب</h1>
-                                <p class="fade-item fade-item-2">ما همیشه به فکر زیبایی و جذابیت شما هستیم !</p>
-                                <a href="shop-default.html" class="fade-item fade-item-3 tf-btn btn-fill animate-hover-btn btn-xl radius-3"><span>مجموعه فروشگاه</span><i class="icon icon-arrow-right"></i></a>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
         <div class="wrap-pagination">

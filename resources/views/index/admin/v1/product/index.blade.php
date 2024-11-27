@@ -28,7 +28,24 @@
                     </div>
                 </div>
 
-
+                @if(Session::has('product`_error'))
+                    <div class="alert alert-error">
+                    </div>{{Session('product`_error')}}<div>
+                    </div>
+                @elseif(Session::has('product_success'))
+                    <div class="alert alert-success">
+                    </div>{{Session('product_success')}}<div>
+                    </div>
+                @endif
+                @if($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach($errors->all() as $error )
+                                <li>{{$error}}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
                 <div class="grid grid-cols-12 gap-5">
                     <div class="col-span-12">
                         <div class="card dark:bg-zinc-800 dark:border-zinc-600">

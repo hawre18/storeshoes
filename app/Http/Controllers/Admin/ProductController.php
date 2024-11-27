@@ -159,7 +159,19 @@ class ProductController extends Controller
             return redirect('/admin/products');
         }
     }
-
+    public function delete($id)
+    {
+        try{
+            $product=Product::findorfail($id);
+            $product->delete();
+            Session::flash('product_success','محصول با موفقیت حذف شد');
+            return redirect('/admin/products');
+        }
+        catch (\Exception $m){
+            Session::flash('product_error','خطایی در حذف به وجود آمده لطفا مجددا تلاش کنید');
+            return redirect('/admin/products');
+        }
+    }
     /**
      * Remove the specified resource from storage.
      */

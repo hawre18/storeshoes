@@ -16,6 +16,7 @@ window.Vue = require('vue');
 
 const app = createApp({});
 Vue.component('attribute-component',require('components/AttributeComponent.vue').default)
+Vue.component('select-city-component', require('components/SelectCityComponent.vue').default)
 
 /**
  * The following block of code may be used to automatically register your
