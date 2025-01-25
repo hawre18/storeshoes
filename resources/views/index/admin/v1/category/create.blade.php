@@ -1,4 +1,7 @@
 @extends('template.admin.v1.layout')
+@section('styles')
+    <link rel="stylesheet" href="{{asset('/assets/admin/v1/css/dropzone.css')}}">
+@endsection
 @section('content')
 <div class="main-content">
     <div class="page-content dark:bg-zinc-700">
@@ -57,6 +60,13 @@
                                 <label for="example-text-input" class="block font-medium text-gray-700 dark:text-gray-100 mb-2">نام</label>
                                 <input name="name" value="{{old('name')}}" class="w-full rounded border-gray-100 placeholder:text-sm focus:border focus:border-violet-500 focus:ring-0 dark:bg-zinc-700/50 dark:border-zinc-600 dark:placeholder:text-zinc-100 dark:text-zinc-100" type="text" placeholder="فقط حروف انگلیسی" id="example-text-input">
                             </div>
+                            <div class="form-group">
+                                <label for="photo">گالری تصاویر</label>
+                                <input type="hidden" name="photo_id" id="slide-photo">
+                                <div id="photo" class="dropzone" ></div>
+                                <div class="=row">
+                                </div>
+                            </div>
                             <div class="mt-8">
                                 <div class="grid grid-cols-12 gap-5">
                                     <div class="col-span-12 lg:col-span-4">
@@ -90,4 +100,22 @@
         </div>
     </div>
 </div>
+@endsection
+@section('scripts')
+    <script type="text/javascript" src="{{asset('/assets/admin/v1/js/dropzone.js')}}"></script>
+    <script>
+        Dropzone.autoDiscover=false;
+        var drop=new Dropzone('#photo',{
+            addRemoveLinks:true,
+            url:"{{route('images.upload')}}",
+            sending:function (file,xhr,formData) {
+                formData.append("_token","{{csrf_token()}}")
+
+            },
+            success: function (file,response) {
+                document.getElementById('slide-photo').value=response.image_slide_id
+            }
+        });
+
+    </script>
 @endsection

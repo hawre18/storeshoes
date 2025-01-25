@@ -11,8 +11,8 @@ class HomeController extends Controller
 {
     public function index()
     {
-
-        return view('index.user.v1.index');
+        $loopIndex=1;
+        return view('index.user.v1.index',compact('loopIndex'));
     }
     public function profile()
     {

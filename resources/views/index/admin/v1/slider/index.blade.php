@@ -51,7 +51,7 @@
                                                 <td class="p-3 dark:text-zinc-100" data-field="id" style="width: 80px">{{$loop->index+1}}</td>
                                                 <td class="p-3 dark:text-zinc-100" data-field="name">{{$row->title}}</td>
                                                 <td class="p-3 dark:text-zinc-100" data-field="age">{{$row->description}}</td>
-                                                <td class="p-3 dark:text-zinc-100 img-thumbnail" data-field="age"><img class="img-thumbnail" src="{{asset('storage/photos/'.$row->image->path)}}"/></td>
+                                                <td class="p-3 dark:text-zinc-100 img-thumbnail" data-field="age">---</td>
                                                 @if($row->status==0)
                                                     <td class="p-s"><span class="label label-danger">منتشر نشده</span></td>
                                                 @else

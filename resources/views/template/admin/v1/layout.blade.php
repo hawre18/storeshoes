@@ -98,20 +98,20 @@
             <div>
                 <div class="dropdown relative ltr:mr-4 rtl:ml-4">
                     <button type="button" class="flex items-center px-4 py-5 border-x border-gray-50 bg-gray-50/30 dropdown-toggle dark:bg-zinc-700 dark:border-zinc-600 dark:text-gray-100" id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                        <img class="h-8 w-8 rounded-full ltr:xl:mr-2 rtl:xl:ml-2" src="{{asset('assets/admin/v1/images/users/avatar-1.jpg')}}" alt="Header Avatar">
-                        <span class="fw-medium hidden xl:block">فرهاد باقری</span>
+                        <!--<img class="h-8 w-8 rounded-full ltr:xl:mr-2 rtl:xl:ml-2" src="" alt="Header Avatar"> -->
+                        <span class="fw-medium hidden xl:block">{{Auth::guard('admin')->user()->name .' '. Auth::guard('admin')->user()->l_name}}</span>
                         <i class="mdi mdi-chevron-down align-bottom hidden xl:block"></i>
                     </button>
                     <div class="dropdown-menu absolute top-0 ltr:-left-3 rtl:left-0 z-50 hidden w-40 list-none rounded bg-white shadow dark:bg-zinc-800" id="profile/log">
                         <div class="border border-gray-50 dark:border-zinc-600" aria-labelledby="navNotifications">
                             <div class="dropdown-item dark:text-gray-100">
-                                <a class="px-3 py-2 hover:bg-gray-50/50 block dark:hover:bg-zinc-700/50" href="apps-contacts-profile.html">
+                                <a class="px-3 py-2 hover:bg-gray-50/50 block dark:hover:bg-zinc-700/50" href="#">
                                     <i class="mdi mdi-face-man text-16 align-middle mr-1"></i> پروفایل
                                 </a>
                             </div>
                             <hr class="border-gray-50 dark:border-gray-700">
                             <div class="dropdown-item dark:text-gray-100">
-                                <a class="p-3 hover:bg-gray-50/50 block dark:hover:bg-zinc-700/50" href="#">
+                                <a class="p-3 hover:bg-gray-50/50 block dark:hover:bg-zinc-700/50" href="{{route('admin.logout')}}">
                                     <i class="mdi mdi-logout text-16 align-middle mr-1"></i> خروج
                                 </a>
                             </div>
@@ -134,22 +134,25 @@
                 <li class="menu-heading px-4 py-3.5 text-xs font-medium text-gray-500 cursor-default" data-key="t-menu">منو</li>
 
                 <li>
-                    <a href="index-2.html" class="pl-6 pr-4 py-3 block text-sm font-medium text-gray-700 transition-all duration-150 ease-linear hover:text-violet-500 dark:text-gray-300 dark:active:text-white dark:hover:text-white">
+                    <a href="{{route('admin.dashboard')}}" class="pl-6 pr-4 py-3 block text-sm font-medium text-gray-700 transition-all duration-150 ease-linear hover:text-violet-500 dark:text-gray-300 dark:active:text-white dark:hover:text-white">
                         <i data-feather="home"></i>
                         <span data-key="t-dashboard"> داشبورد</span>
                     </a>
                 </li>
 
                 <li>
-                    <a href="javascript: void(0);" aria-expanded="false" class="nav-menu pl-6 pr-4 py-3 block text-sm font-medium text-gray-700 transition-all duration-150 ease-linear hover:text-violet-500 dark:text-gray-300 dark:active:text-white dark:hover:text-white">
+                   <a href="javascript: void(0);" aria-expanded="false" class="nav-menu pl-6 pr-4 py-3 block text-sm font-medium text-gray-700 transition-all duration-150 ease-linear hover:text-violet-500 dark:text-gray-300 dark:active:text-white dark:hover:text-white">
                         <i data-feather="grid"></i>
-                        <span data-key="t-apps"> برنامه‌ها</span>
+                        <span data-key="t-apps">دسته بندی ها</span>
                     </a>
                     <ul>
-                        <li>
-                            <a href="app-calendar.html" class="pr-14 pl-4 py-2 block text-[13.5px] font-medium text-gray-700 transition-all duration-150 ease-linear hover:text-violet-500 dark:text-gray-300 dark:active:text-white dark:hover:text-white">تقویم</a>
+                       <li>
+                            <a href="{{route('categories.index')}}" class="pr-14 pl-4 py-2 block text-[13.5px] font-medium text-gray-700 transition-all duration-150 ease-linear hover:text-violet-500 dark:text-gray-300 dark:active:text-white dark:hover:text-white">لیست</a>
                         </li>
                         <li>
+                            <a href="{{route('categories.create')}}" class="pr-14 pl-4 py-2 block text-[13.5px] font-medium text-gray-700 transition-all duration-150 ease-linear hover:text-violet-500 dark:text-gray-300 dark:active:text-white dark:hover:text-white">افزودن رکورد جدید</a>
+                        </li>
+                       <!-- <li>
                             <a href="javascript: void(0);" aria-expanded="false" class="nav-menu pr-14 pl-4 py-2 block text-sm font-medium text-gray-700 transition-all duration-150 ease-linear hover:text-violet-500 dark:text-gray-300 dark:active:text-white dark:hover:text-white">
                                 <span data-key="t-apps">ایمیل</span>
                             </a>
@@ -161,6 +164,90 @@
                                     <a href="apps-email-read.html" class="pr-[4.5rem] pl-4 py-2 block text-[13.5px] font-medium text-gray-700 transition-all duration-150 ease-linear hover:text-violet-500 dark:text-gray-300 dark:active:text-white dark:hover:text-white">خواندن ایمیل</a>
                                 </li>
                             </ul>
+                        </li>-->
+                    </ul>
+                </li>
+                <li>
+                   <a href="javascript: void(0);" aria-expanded="false" class="nav-menu pl-6 pr-4 py-3 block text-sm font-medium text-gray-700 transition-all duration-150 ease-linear hover:text-violet-500 dark:text-gray-300 dark:active:text-white dark:hover:text-white">
+                        <i data-feather="grid"></i>
+                        <span data-key="t-apps">گروه ویژگی ها</span>
+                    </a>
+                    <ul>
+                       <li>
+                            <a href="{{route('attribute-groups.index')}}" class="pr-14 pl-4 py-2 block text-[13.5px] font-medium text-gray-700 transition-all duration-150 ease-linear hover:text-violet-500 dark:text-gray-300 dark:active:text-white dark:hover:text-white">لیست</a>
+                        </li>
+                        <li>
+                            <a href="{{route('attribute-groups.create')}}" class="pr-14 pl-4 py-2 block text-[13.5px] font-medium text-gray-700 transition-all duration-150 ease-linear hover:text-violet-500 dark:text-gray-300 dark:active:text-white dark:hover:text-white">افزودن رکورد جدید</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                   <a href="javascript: void(0);" aria-expanded="false" class="nav-menu pl-6 pr-4 py-3 block text-sm font-medium text-gray-700 transition-all duration-150 ease-linear hover:text-violet-500 dark:text-gray-300 dark:active:text-white dark:hover:text-white">
+                        <i data-feather="grid"></i>
+                        <span data-key="t-apps">مقدار ویژگی ها</span>
+                    </a>
+                    <ul>
+                       <li>
+                            <a href="{{route('attribute-values.index')}}" class="pr-14 pl-4 py-2 block text-[13.5px] font-medium text-gray-700 transition-all duration-150 ease-linear hover:text-violet-500 dark:text-gray-300 dark:active:text-white dark:hover:text-white">لیست</a>
+                        </li>
+                        <li>
+                            <a href="{{route('attribute-values.create')}}" class="pr-14 pl-4 py-2 block text-[13.5px] font-medium text-gray-700 transition-all duration-150 ease-linear hover:text-violet-500 dark:text-gray-300 dark:active:text-white dark:hover:text-white">افزودن رکورد جدید</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                   <a href="javascript: void(0);" aria-expanded="false" class="nav-menu pl-6 pr-4 py-3 block text-sm font-medium text-gray-700 transition-all duration-150 ease-linear hover:text-violet-500 dark:text-gray-300 dark:active:text-white dark:hover:text-white">
+                        <i data-feather="grid"></i>
+                        <span data-key="t-apps">اسلایدر</span>
+                    </a>
+                    <ul>
+                       <li>
+                            <a href="{{route('slides.index')}}" class="pr-14 pl-4 py-2 block text-[13.5px] font-medium text-gray-700 transition-all duration-150 ease-linear hover:text-violet-500 dark:text-gray-300 dark:active:text-white dark:hover:text-white">لیست</a>
+                        </li>
+                        <li>
+                            <a href="{{route('slides.create')}}" class="pr-14 pl-4 py-2 block text-[13.5px] font-medium text-gray-700 transition-all duration-150 ease-linear hover:text-violet-500 dark:text-gray-300 dark:active:text-white dark:hover:text-white">افزودن رکورد جدید</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                   <a href="javascript: void(0);" aria-expanded="false" class="nav-menu pl-6 pr-4 py-3 block text-sm font-medium text-gray-700 transition-all duration-150 ease-linear hover:text-violet-500 dark:text-gray-300 dark:active:text-white dark:hover:text-white">
+                        <i data-feather="grid"></i>
+                        <span data-key="t-apps">برندها</span>
+                    </a>
+                    <ul>
+                       <li>
+                            <a href="{{route('brands.index')}}" class="pr-14 pl-4 py-2 block text-[13.5px] font-medium text-gray-700 transition-all duration-150 ease-linear hover:text-violet-500 dark:text-gray-300 dark:active:text-white dark:hover:text-white">لیست</a>
+                        </li>
+                        <li>
+                            <a href="{{route('brands.create')}}" class="pr-14 pl-4 py-2 block text-[13.5px] font-medium text-gray-700 transition-all duration-150 ease-linear hover:text-violet-500 dark:text-gray-300 dark:active:text-white dark:hover:text-white">افزودن رکورد جدید</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                   <a href="javascript: void(0);" aria-expanded="false" class="nav-menu pl-6 pr-4 py-3 block text-sm font-medium text-gray-700 transition-all duration-150 ease-linear hover:text-violet-500 dark:text-gray-300 dark:active:text-white dark:hover:text-white">
+                        <i data-feather="grid"></i>
+                        <span data-key="t-apps">خبرنامه</span>
+                    </a>
+                    <ul>
+                       <li>
+                            <a href="{{route('blogs.index')}}" class="pr-14 pl-4 py-2 block text-[13.5px] font-medium text-gray-700 transition-all duration-150 ease-linear hover:text-violet-500 dark:text-gray-300 dark:active:text-white dark:hover:text-white">لیست</a>
+                        </li>
+                        <li>
+                            <a href="{{route('blogs.create')}}" class="pr-14 pl-4 py-2 block text-[13.5px] font-medium text-gray-700 transition-all duration-150 ease-linear hover:text-violet-500 dark:text-gray-300 dark:active:text-white dark:hover:text-white">افزودن رکورد جدید</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                   <a href="javascript: void(0);" aria-expanded="false" class="nav-menu pl-6 pr-4 py-3 block text-sm font-medium text-gray-700 transition-all duration-150 ease-linear hover:text-violet-500 dark:text-gray-300 dark:active:text-white dark:hover:text-white">
+                        <i data-feather="grid"></i>
+                        <span data-key="t-apps">محصولات</span>
+                    </a>
+                    <ul>
+                       <li>
+                            <a href="{{route('products.index')}}" class="pr-14 pl-4 py-2 block text-[13.5px] font-medium text-gray-700 transition-all duration-150 ease-linear hover:text-violet-500 dark:text-gray-300 dark:active:text-white dark:hover:text-white">لیست</a>
+                        </li>
+                        <li>
+                            <a href="{{route('products.create')}}" class="pr-14 pl-4 py-2 block text-[13.5px] font-medium text-gray-700 transition-all duration-150 ease-linear hover:text-violet-500 dark:text-gray-300 dark:active:text-white dark:hover:text-white">افزودن رکورد جدید</a>
                         </li>
                     </ul>
                 </li>

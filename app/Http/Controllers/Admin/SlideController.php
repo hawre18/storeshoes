@@ -148,18 +148,18 @@ class SlideController extends Controller
                     ->where('id', $id)
                     ->update(array('status' => 1));
                 Session::flash('slide_success', 'اسلاید با موفقیت منتشر شد');
-                return redirect('/admins/slides');
+                return redirect('/admin/slides');
             }elseif ($status==0) {
                 DB::table('slides')
                     ->where('id', $id)
                     ->update(array('status' => 0));
                 Session::flash('slide_error', 'اسلاید با موفقیت منقضی شد');
-                return redirect('/admins/slides');
+                return redirect('/admin/slides');
             }
         }
         catch (\Exception $m){
             Session::flash('slide_error','خطایی در انجام عملیات روی  اسلاید به وجود آمده لطفا مجددا تلاش کنید');
-            return redirect('/admins/slides');
+            return redirect('/admin/slides');
         }
     }
     /**

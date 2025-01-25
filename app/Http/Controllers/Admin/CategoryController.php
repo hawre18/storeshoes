@@ -54,6 +54,7 @@ class CategoryController extends Controller
             $category->title=$request->input('title');
             $category->parent_id=$request->input('parent_id');
             $category->admin_id = 1;
+            $category->image_id=$request->input('photo_id');
             $category->save();
             Session::flash('category_success','عملیات موفقیت آمیز بود');
             return redirect('admin/categories');
@@ -96,6 +97,17 @@ class CategoryController extends Controller
             $category->name=$request->input('name');
             $category->title=$request->input('title');
             $category->parent_id=$request->input('parent_id');
+            if(($request->input('photo_id')!=null)&&($request->input('image_id')!=null)){
+                $category->image_id=$request->input('photo_id');
+            }elseif (($request->input('image_id')==null)&&($request->input('photo_id')!=null)){
+                $category->image_id=$request->input('photo_id');
+            }
+            elseif (($request->input('image_id')!=null)&&($request->input('photo_id')==null)){
+                $category->image_id=$request->input('image_id');
+            }
+            else{
+                $category->image_id=null;
+            }
             $category->save();
             Session::flash('category_success','عملیات موفقیت آمیز بود');
             return redirect('admin/categories');

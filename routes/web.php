@@ -62,6 +62,10 @@ Route::group(['prefix'=>'/','namespace'=>'App\Http\Controllers\User'],function (
     Route::post('/doVerify', 'LoginController@doVerify')->name('doVerify');
     Route::get('/','HomeController@index')->name('index');
     Route::get('category/{id}','ProductController@getProductByCategory')->name('category.index');
+    Route::post('/remove-to-cart/{id}','CartController@removeItem')->name('cart.remove');
+    Route::get('/add-to-cart/{id}','CartController@addToCart')->name('cart.add');
+    Route::get('product-details/{id}','ProductController@getProductDetails')->name('product.details');
+    Route::get('products-details/{id}', 'ProductController@showDetails')->name('products.quickView');
 });
 Route::group(['middleware'=>'auth:web','namespace'=>'App\Http\Controllers\User'],function (){
     Route::get('/profile','HomeController@profile')->name('user.profile');

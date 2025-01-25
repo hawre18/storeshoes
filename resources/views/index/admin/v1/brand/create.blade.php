@@ -99,6 +99,5 @@
                 document.getElementById('slide-photo').value=response.image_slide_id
             }
         });
-
     </script>
 @endsection

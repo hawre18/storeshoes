@@ -1,3 +1,3 @@
-<a class="dropdown-item" href="{{ route('admin.logout') }}">
-    {{ __('Logout') }}
-</a>
+@extends('template.admin.v1.layout')
+@section('content')
+@endsection

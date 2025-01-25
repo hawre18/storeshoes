@@ -31,7 +31,8 @@
     </div>
 </div>
 <!-- /preload -->
-<div id="app">
+
+    <div id="wrapper">
     <!-- Top Bar -->
     <div class="tf-top-bar bg_white line">
         <div class="px_15 lg-px_40">
@@ -104,12 +105,13 @@
                             <li class="nav-account"><a href="#login" data-bs-toggle="modal" class="nav-icon-item"><i class="icon icon-account"></i></a></li>
                         @endif
                         <li class="nav-wishlist"><a href="#" class="nav-icon-item"><i class="icon icon-heart"></i><span class="count-box">0</span></a></li>
-                        <li class="nav-cart"><a href="#shoppingCart" data-bs-toggle="modal" class="nav-icon-item"><i class="icon icon-bag"></i><span class="count-box">0</span></a></li>
+                        <li class="nav-cart"><a href="#shoppingCart" data-bs-toggle="modal" class="nav-icon-item"><i class="icon icon-bag"></i><span class="count-box">{{Session::has('cart') ? Session::get('cart')->totalQty:0}}</span></a></li>
                     </ul>
                 </div>
             </div>
         </div>
     </header>
+    @yield('slider')
     <!-- /Header -->
 @yield('content')
     <!-- Footer -->
@@ -247,8 +249,8 @@
         </div>
     </footer>
     <!-- /Footer -->
+    </div>
 
-</div>
 
 <!-- gotop -->
 <div class="progress-wrap">
@@ -298,7 +300,7 @@
         <a href="#shoppingCart" data-bs-toggle="modal">
             <div class="toolbar-icon">
                 <i class="icon-bag"></i>
-                <div class="toolbar-count">1</div>
+                <div class="toolbar-count">{{Session::has('cart') ? Session::get('cart')->totalQty :'0'}}</div>
             </div>
             <div class="toolbar-label">سبد خرید</div>
         </a>
@@ -443,6 +445,7 @@
 <div class="modal modalCentered fade form-sign-in modal-part-content" id="login">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
+            @if(!Auth::check())
             <div class="header">
                 <div class="demo-title">وارد شوید</div>
                 <span class="icon-close icon-close-popup" data-bs-dismiss="modal"></span>
@@ -466,6 +469,9 @@
                     </div>
                 </form>
             </div>
+            @else
+            <a href="{{route('user.profile')}}"></a>
+            @endif
         </div>
     </div>
 </div>
@@ -530,98 +536,42 @@
                         <span style="width: 50%;"></span>
                     </div>
                     <div class="tf-progress-msg">
-                        خرید <span class="price fw-6">75.00<toman> تومان </toman></span> برای لذت بردن بیشتر از <span class="fw-6">ارسال رایگان</span>
+                        خرید <span class="price fw-6">3,000,000<toman> تومان </toman></span> برای لذت بردن بیشتر از <span class="fw-6">ارسال رایگان</span>
                     </div>
                 </div>
-                <div class="tf-mini-cart-wrap">
+                @if(Session::has('cart'))
+                <div class="tf-mini-cart-wrap" id="cart">
                     <div class="tf-mini-cart-main">
                         <div class="tf-mini-cart-sroll">
                             <div class="tf-mini-cart-items">
+                                @foreach(Session::get('cart')->items as $product)
                                 <div class="tf-mini-cart-item">
                                     <div class="tf-mini-cart-image">
                                         <a href="product-detail.html">
-                                            <img src="{{asset('assets/user/v1/images/products/white-2.jpg')}}" alt="">
+                                            <img src="{{asset('storage/photos/'.$product['item']->images[0]->path)}}" alt="">
                                         </a>
                                     </div>
                                     <div class="tf-mini-cart-info">
-                                        <a class="title link" href="product-detail.html">تی شرت</a>
-                                        <div class="meta-variant">خاکستری روشن</div>
-                                        <div class="price fw-6">25.00<toman> تومان </toman></div>
+                                        <a class="title link" href="product-detail.html">{{$product['item']->title}}</a>
+                                        <!--<div class="meta-variant">خاکستری روشن</div>-->
+                                        <div class="price fw-6">{{$product['price']}}<toman> تومان </toman></div>
                                         <div class="tf-mini-cart-btns">
                                             <div class="wg-quantity small">
                                                 <span class="btn-quantity minus-btn">-</span>
-                                                <input type="text" name="number" value="1">
+                                                <input type="text" name="number" value="{{$product['qty']}}">
                                                 <span class="btn-quantity plus-btn">+</span>
                                             </div>
-                                            <div class="tf-mini-cart-remove">حذف</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="tf-mini-cart-item">
-                                    <div class="tf-mini-cart-image">
-                                        <a href="product-detail.html">
-                                            <img src="{{asset('assets/user/v1/images/products/white-3.jpg')}}" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="tf-mini-cart-info">
-                                        <a class="title link" href="product-detail.html">موتیف بزرگ تی شرت</a>
-                                        <div class="price fw-6">25.00<toman> تومان </toman></div>
-                                        <div class="tf-mini-cart-btns">
-                                            <div class="wg-quantity small">
-                                                <span class="btn-quantity minus-btn">-</span>
-                                                <input type="text" name="number" value="1">
-                                                <span class="btn-quantity plus-btn">+</span>
-                                            </div>
-                                            <div class="tf-mini-cart-remove">حذف</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tf-minicart-recommendations">
-                                <div class="tf-minicart-recommendations-heading">
-                                    <div class="tf-minicart-recommendations-title">شما هم ممکن است دوست داشته باشید</div>
-                                    <div class="sw-dots small style-2 cart-slide-pagination"></div>
-                                </div>
-                                <div class="swiper tf-cart-slide">
-                                    <div class="swiper-wrapper" >
-                                        <div class="swiper-slide">
-                                            <div class="tf-minicart-recommendations-item">
-                                                <div class="tf-minicart-recommendations-item-image">
-                                                    <a href="product-detail.html">
-                                                        <img src="{{asset('assets/user/v1/images/products/white-3.jpg')}}" alt="">
-                                                    </a>
-                                                </div>
-                                                <div class="tf-minicart-recommendations-item-infos flex-grow-1">
-                                                    <a class="title" href="product-detail.html">سویشرت گشاد</a>
-                                                    <div class="price">25.00<toman> تومان </toman></div>
-                                                </div>
-                                                <div class="tf-minicart-recommendations-item-quickview">
-                                                    <div class="btn-show-quickview quickview hover-tooltip">
-                                                        <span class="icon icon-view"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="swiper-slide">
-                                            <div class="tf-minicart-recommendations-item">
-                                                <div class="tf-minicart-recommendations-item-image">
-                                                    <a href="product-detail.html">
-                                                        <img src="{{asset('assets/user/v1/images/products/white-2.jpg')}}" alt="">
-                                                    </a>
-                                                </div>
-                                                <div class="tf-minicart-recommendations-item-infos flex-grow-1">
-                                                    <a class="title" href="product-detail.html">هودی گشاد</a>
-                                                    <div class="price">25.00<toman> تومان </toman></div>
-                                                </div>
-                                                <div class="tf-minicart-recommendations-item-quickview">
-                                                    <div class="btn-show-quickview quickview hover-tooltip">
-                                                        <span class="icon icon-view"></span>
-                                                    </div>
-                                                </div>
+                                            <div class="tf-mini-cart-remove"><button class="btn btn-danger btn-xs remove" title="حذف" onclick="event.preventDefault();
+                                                       document.getElementById('remove-cart-item_{{$product['item']->id}}').submit();" type="button"><i class="fa fa-times"></i>
+                                                </button>
+                                                <form id="remove-cart-item_{{$product['item']->id}}" action="{{ route('cart.remove',['id'=>$product['item']->id]) }}" method="post" style="display: none;">
+                                                    @csrf
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                                @endforeach
                             </div>
                         </div>
                     </div>
@@ -639,8 +589,8 @@
                         </div>
                         <div class="tf-mini-cart-bottom-wrap">
                             <div class="tf-cart-totals-discounts">
-                                <div class="tf-cart-total">جمع فرعی</div>
-                                <div class="tf-totals-total-value fw-6">49.99<toman> تومان </toman></div>
+                                <div class="tf-cart-total">جمع کل</div>
+                                <div class="tf-totals-total-value fw-6">{{Session::get('cart')->totalPurePrice}}<toman> تومان </toman></div>
                             </div>
                             <div class="tf-cart-tax">مالیات و <a href="#">حمل و نقل</a> در هنگام تسویه حساب محاسبه می شود</div>
                             <div class="tf-mini-cart-line"></div>
@@ -753,6 +703,9 @@
                         </div>
                     </div>
                 </div>
+                @else
+                <div>سبد خرید خالی است</div>
+                @endif
             </div>
         </div>
     </div>
@@ -814,237 +767,7 @@
 </div>
 <!-- /modal compare -->
 
-<!-- modal quick_add -->
-<div class="modal fade modalDemo" id="quick_add">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="header">
-                <span class="icon-close icon-close-popup" data-bs-dismiss="modal"></span>
-            </div>
-            <div class="wrap">
-                <div class="tf-product-info-item">
-                    <div class="image">
-                        <img src="{{asset('assets/user/v1/images/products/orange-1.jpg')}}" alt="">
-                    </div>
-                    <div class="content">
-                        <a href="product-detail.html">زیرپوش آجدار آدیداس</a>
-                        <div class="tf-product-info-price">
-                            <!-- <div class="price-on-sale">8.00<toman> تومان </toman></div>
-                                <div class="compare-at-price">10.00<toman> تومان </toman></div>
-                                <div class="badges-on-sale"><span>20</span>% تخفیف</div> -->
-                            <div class="price">18.00<toman> تومان </toman></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="tf-product-info-variant-picker mb_15">
-                    <div class="variant-picker-item">
-                        <div class="variant-picker-label">
-                            رنگ: <span class="fw-6 variant-picker-label-value">نارنجی</span>
-                        </div>
-                        <div class="variant-picker-values">
-                            <input id="values-orange" type="radio" name="color" checked>
-                            <label class="hover-tooltip radius-60" for="values-orange" data-value="نارنجی">
-                                <span class="btn-checkbox bg-color-orange"></span>
-                                <span class="tooltip">نارنجی</span>
-                            </label>
-                            <input id="values-black" type="radio" name="color">
-                            <label class=" hover-tooltip radius-60" for="values-black" data-value="سیاه">
-                                <span class="btn-checkbox bg-color-black"></span>
-                                <span class="tooltip">مشکی</span>
-                            </label>
-                            <input id="values-white" type="radio" name="color">
-                            <label class="hover-tooltip radius-60" for="values-white" data-value="سفید">
-                                <span class="btn-checkbox bg-color-white"></span>
-                                <span class="tooltip">سفید</span>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="variant-picker-item">
-                        <div class="variant-picker-label">
-                            اندازه: <span class="fw-6 variant-picker-label-value">S</span>
-                        </div>
-                        <div class="variant-picker-values">
-                            <input type="radio" name="size" id="values-s" checked>
-                            <label class="style-text" for="values-s" data-value="S">
-                                <p>S</p>
-                            </label>
-                            <input type="radio" name="size" id="values-m">
-                            <label class="style-text" for="values-m" data-value="M">
-                                <p>M</p>
-                            </label>
-                            <input type="radio" name="size" id="values-l">
-                            <label class="style-text" for="values-l" data-value="L">
-                                <p>L</p>
-                            </label>
-                            <input type="radio" name="size" id="values-xl">
-                            <label class="style-text" for="values-xl" data-value="XL">
-                                <p>XL</p>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-                <div class="tf-product-info-quantity mb_15">
-                    <div class="quantity-title fw-6">مقدار</div>
-                    <div class="wg-quantity">
-                        <span class="btn-quantity minus-btn">-</span>
-                        <input type="text" name="number" value="1">
-                        <span class="btn-quantity plus-btn">+</span>
-                    </div>
-                </div>
-                <div class="tf-product-info-buy-button">
-                    <form>
-                        <a href="javascript:void(0);" class="tf-btn btn-fill justify-content-center fw-6 fs-16 flex-grow-1 animate-hover-btn btn-add-to-cart"><span>به سبد خرید اضافه کنید -&nbsp;</span><span class="tf-qty-price">18.00<toman> تومان </toman></span></a>
-                        <div class="tf-product-btn-wishlist btn-icon-action">
-                            <i class="icon-heart"></i>
-                            <i class="icon-delete"></i>
-                        </div>
-                        <a href="#compare" data-bs-toggle="offcanvas" aria-controls="offcanvasLeft" class="tf-product-btn-wishlist box-icon bg_white compare btn-icon-action">
-                            <span class="icon icon-compare"></span>
-                            <span class="icon icon-check"></span>
-                        </a>
-                        <div class="w-100">
-                            <a href="#" class="btns-full">خرید با <img src="{{asset('assets/user/v1/images/payments/paypal.png')}}" alt=""></a>
-                            <a href="#" class="payment-more-option">گزینه های پرداخت بیشتر</a>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- /modal quick_add -->
-
-<!-- modal quick_view -->
-<div class="modal fade modalDemo" id="quick_view">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="header">
-                <span class="icon-close icon-close-popup" data-bs-dismiss="modal"></span>
-            </div>
-            <div class="wrap">
-                <div class="tf-product-media-wrap">
-                    <div class="swiper tf-single-slide">
-                        <div class="swiper-wrapper" >
-                            <div class="swiper-slide">
-                                <div class="item">
-                                    <img src="{{asset('assets/user/v1/images/products/orange-1.jpg')}}" alt="">
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="item">
-                                    <img src="{{asset('assets/user/v1/images/products/pink-1.jpg')}}" alt="">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="swiper-button-next button-style-arrow single-slide-prev"></div>
-                        <div class="swiper-button-prev button-style-arrow single-slide-next"></div>
-                    </div>
-                </div>
-                <div class="tf-product-info-wrap position-relative">
-                    <div class="tf-product-info-list">
-                        <div class="tf-product-info-title">
-                            <h5><a class="link" href="product-detail.html">زیرپوش آجدار آدیداس</a></h5>
-                        </div>
-                        <div class="tf-product-info-badges">
-                            <div class="badges text-uppercase">پرفروش ترین</div>
-                            <div class="product-status-content">
-                                <i class="icon-lightning"></i>
-                                <p class="fw-6">فروش سریع! 48 نفر این را در سبد خرید خود دارند.</p>
-                            </div>
-                        </div>
-                        <div class="tf-product-info-price">
-                            <div class="price">18.00<toman> تومان </toman></div>
-                        </div>
-                        <div class="tf-product-description">
-                            <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و س..</p>
-                        </div>
-                        <div class="tf-product-info-variant-picker">
-                            <div class="variant-picker-item">
-                                <div class="variant-picker-label">
-                                    رنگ: <span class="fw-6 variant-picker-label-value">نارنجی</span>
-                                </div>
-                                <div class="variant-picker-values">
-                                    <input id="values-orange-1" type="radio" name="color-1" checked>
-                                    <label class="hover-tooltip radius-60" for="values-orange-1" data-value="نارنجی">
-                                        <span class="btn-checkbox bg-color-orange"></span>
-                                        <span class="tooltip">نارنجی</span>
-                                    </label>
-                                    <input id="values-black-1" type="radio" name="color-1">
-                                    <label class=" hover-tooltip radius-60" for="values-black-1" data-value="سیاه">
-                                        <span class="btn-checkbox bg-color-black"></span>
-                                        <span class="tooltip">مشکی</span>
-                                    </label>
-                                    <input id="values-white-1" type="radio" name="color-1">
-                                    <label class="hover-tooltip radius-60" for="values-white-1" data-value="سفید">
-                                        <span class="btn-checkbox bg-color-white"></span>
-                                        <span class="tooltip">سفید</span>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="variant-picker-item">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="variant-picker-label">
-                                        اندازه: <span class="fw-6 variant-picker-label-value">S</span>
-                                    </div>
-                                    <div class="find-size btn-choose-size fw-6">اندازه خود را پیدا کنید</div>
-                                </div>
-                                <div class="variant-picker-values">
-                                    <input type="radio" name="size-1" id="values-s-1" checked>
-                                    <label class="style-text" for="values-s-1" data-value="S">
-                                        <p>S</p>
-                                    </label>
-                                    <input type="radio" name="size-1" id="values-m-1">
-                                    <label class="style-text" for="values-m-1" data-value="M">
-                                        <p>M</p>
-                                    </label>
-                                    <input type="radio" name="size-1" id="values-l-1">
-                                    <label class="style-text" for="values-l-1" data-value="L">
-                                        <p>L</p>
-                                    </label>
-                                    <input type="radio" name="size-1" id="values-xl-1">
-                                    <label class="style-text" for="values-xl-1" data-value="XL">
-                                        <p>XL</p>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tf-product-info-quantity">
-                            <div class="quantity-title fw-6">مقدار</div>
-                            <div class="wg-quantity">
-                                <span class="btn-quantity minus-btn">-</span>
-                                <input type="text" name="number" value="1">
-                                <span class="btn-quantity plus-btn">+</span>
-                            </div>
-                        </div>
-                        <div class="tf-product-info-buy-button">
-                            <form class="">
-                                <a href="#" class="tf-btn btn-fill justify-content-center fw-6 fs-16 flex-grow-1 animate-hover-btn "><span>به سبد خرید اضافه کنید -&nbsp;</span><span class="tf-qty-price">8.00<toman> تومان </toman></span></a>
-                                <a href="javascript:void(0);" class="tf-product-btn-wishlist hover-tooltip box-icon bg_white wishlist btn-icon-action">
-                                    <span class="icon icon-heart"></span>
-                                    <span class="tooltip">افزودن به لیست علاقه مندی</span>
-                                    <span class="icon icon-delete"></span>
-                                </a>
-                                <a href="#compare" data-bs-toggle="offcanvas" aria-controls="offcanvasLeft" class="tf-product-btn-wishlist hover-tooltip box-icon bg_white compare btn-icon-action">
-                                    <span class="icon icon-compare"></span>
-                                    <span class="tooltip">افزودن به مقایسه</span>
-                                    <span class="icon icon-check"></span>
-                                </a>
-                                <div class="w-100">
-                                    <a href="#" class="btns-full">خرید با <img src="{{asset('assets/user/v1/images/payments/paypal.png')}}" alt=""></a>
-                                    <a href="#" class="payment-more-option">گزینه های پرداخت بیشتر</a>
-                                </div>
-                            </form>
-                        </div>
-                        <div>
-                            <a href="product-detail.html" class="tf-btn fw-6 btn-line">مشاهده جزئیات کامل<i class="icon icon-arrow1-top-right"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- /modal quick_view -->
+@yield('modal')
 
 <!-- modal find_size -->
 <div class="modal fade modalDemo tf-product-modal" id="find_size">
@@ -1174,6 +897,7 @@
 <script type="text/javascript" src="{{asset('assets/user/v1/js/multiple-modal.js')}}"></script>
 <script type="text/javascript" src="{{asset('assets/user/v1/js/main.js')}}"></script>
 <script type="text/javascript" src="{{asset('assets/user/v1/js/app.js')}}"></script>
+@yield('scripts')
 </body>
 
 </html>
