@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\Address;
 use App\Models\Cart;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class CartController extends Controller
@@ -26,5 +28,29 @@ class CartController extends Controller
         $cart->remove($product, $product->id);
         $request->session()->put('cart', $cart);
         return back();
+    }
+
+    public function getCart()
+    {
+        if (Auth::check()){
+            $addresses=Address::with('province','city')->where('user_id',Auth::user()->id)->get();
+            if($addresses!=null){
+                $cart = Session::has('cart') ? Session::get('cart') : null;
+                return view('index.user.v1.cart-detail', compact(['cart','addresses']));
+            }
+            else{
+                $cart = Session::has('cart') ? Session::get('cart') : null;
+                $addresses=null;
+                return view('index.user.v1.cart-detail', compact(['cart','addresses']));
+            }
+
+        }
+        else{
+            $cart = Session::has('cart') ? Session::get('cart') : null;
+            $addresses=null;
+            return view('index.user.v1.cart-detail', compact(['cart','addresses']));
+        }
+
+
     }
 }

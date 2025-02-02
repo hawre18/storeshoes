@@ -64,8 +64,12 @@ Route::group(['prefix'=>'/','namespace'=>'App\Http\Controllers\User'],function (
     Route::get('category/{id}','ProductController@getProductByCategory')->name('category.index');
     Route::post('/remove-to-cart/{id}','CartController@removeItem')->name('cart.remove');
     Route::get('/add-to-cart/{id}','CartController@addToCart')->name('cart.add');
-    Route::get('product-details/{id}','ProductController@getProductDetails')->name('product.details');
+    Route::get('/cart','CartController@getCart')->name('cart.get');
+    Route::post('/coupon','CouponController@addCoupon')->name('coupon.add');
+    Route::get('single-product-details/{id}','ProductController@getProductDetails')->name('product.details');
     Route::get('products-details/{id}', 'ProductController@showDetails')->name('products.quickView');
+    Route::get('blogs-list', 'BlogController@showList')->name('blogs.list');
+    Route::get('blog-details/{id}', 'BlogController@blogDetail')->name('blog.details');
 });
 Route::group(['middleware'=>'auth:web','namespace'=>'App\Http\Controllers\User'],function (){
     Route::get('/profile','HomeController@profile')->name('user.profile');

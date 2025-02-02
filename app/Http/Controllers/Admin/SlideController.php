@@ -57,6 +57,7 @@ class SlideController extends Controller
             Session::flash('slide_success','با موفقیت ایجاد شد');
             return redirect('admin/slides');
         }catch (\Exception $er){
+            return $er;
             Session::flash('slide_error','خطا در ذخیره سازی');
             return redirect('admin/slides/create');
         }

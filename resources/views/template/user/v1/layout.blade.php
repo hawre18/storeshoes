@@ -93,7 +93,11 @@
                                     </div>
                                 </div>
                             </li>
+                            <li class="menu-item position-relative">
+                                <a href="{{route('blogs.list')}}" class="item-link">وبلاگ<i class="icon icon-arrow-down"></i></a>
+                            </li>
                         </ul>
+
                     </nav>
                 </div>
                 <div class="col-xl-3 col-md-4 col-3">
@@ -592,7 +596,19 @@
                                 <div class="tf-cart-total">جمع کل</div>
                                 <div class="tf-totals-total-value fw-6">{{Session::get('cart')->totalPurePrice}}<toman> تومان </toman></div>
                             </div>
-                            <div class="tf-cart-tax">مالیات و <a href="#">حمل و نقل</a> در هنگام تسویه حساب محاسبه می شود</div>
+                            <div class="tf-cart-totals-discounts">
+                                <div class="tf-cart-total">کسر هدیه</div>
+                                <div class="tf-totals-total-value fw-6">{{Session::get('cart')->totalDiscountPrice}}<toman> تومان </toman></div>
+                            </div>
+                            <div class="tf-cart-totals-discounts">
+                                <div class="tf-cart-total">هزینه ارسال</div>
+                                <div class="tf-totals-total-value fw-6">{{Session::get('cart')->shippingCost}}<toman> تومان </toman></div>
+                            </div>
+                            <div class="tf-cart-totals-discounts">
+                                <div class="tf-cart-total">قابل پرداخت</div>
+                                <div class="tf-totals-total-value fw-6">{{Session::get('cart')->totalPrice}}<toman> تومان </toman></div>
+                            </div>
+
                             <div class="tf-mini-cart-line"></div>
                             <div class="tf-cart-checkbox">
                                 <div class="tf-checkbox-wrapp">
@@ -607,8 +623,7 @@
                                 </label>
                             </div>
                             <div class="tf-mini-cart-view-checkout">
-                                <a href="view-cart.html" class="tf-btn btn-outline radius-3 link w-100 justify-content-center">مشاهده سبد خرید</a>
-                                <a href="checkout.html" class="tf-btn btn-fill animate-hover-btn radius-3 w-100 justify-content-center"><span>تسویه حساب</span></a>
+                                <a href="{{route('cart.get')}}" class="tf-btn btn-outline radius-3 link w-100 justify-content-center">مشاهده سبد خرید</a>
                             </div>
                         </div>
                     </div>

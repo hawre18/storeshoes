@@ -58,7 +58,7 @@
                                 </div>
                                 <div class="mb-4">
                                     <label for="example-text-input" class="block font-medium text-gray-700 dark:text-gray-100 mb-2">متن اصلی</label>
-                                    <input name="body" value="{{old('body')}}" class="w-full rounded border-gray-100 placeholder:text-sm focus:border focus:border-violet-500 focus:ring-0 dark:bg-zinc-700/50 dark:border-zinc-600 dark:placeholder:text-zinc-100 dark:text-zinc-100" type="text" placeholder="این خبرنامه است" id="example-text-input">
+                                    <textarea name="body" id="LongDescription" class="w-full rounded border-gray-100 placeholder:text-sm focus:border focus:border-violet-500 focus:ring-0 dark:bg-zinc-700/50 dark:border-zinc-600 dark:placeholder:text-zinc-100 dark:text-zinc-100" type="text" >{{old('body')}}</textarea>
                                 </div>
                                 <div class="mb-4">
                                     <label for="example-text-input" class="block font-medium text-gray-700 dark:text-gray-100 mb-2">نویسنده</label>
@@ -90,6 +90,7 @@
 @endsection
 @section('scripts')
     <script type="text/javascript" src="{{asset('/assets/admin/v1/js/dropzone.js')}}"></script>
+    <script type="text/javascript" src="{{asset('/assets/admin/v1/js/ckeditor/ckeditor.js')}}"></script>
     <script>
         Dropzone.autoDiscover=false;
         var drop=new Dropzone('#photo',{
@@ -103,6 +104,11 @@
                 document.getElementById('slide-photo').value=response.image_slide_id
             }
         });
-
+        CKEDITOR.replace('LongDescription',{
+            customConfig:'config.js',
+            toolbar:'simple',
+            language:'fa',
+            removePlugins:'cloudservices, easyimage'
+        })
     </script>
 @endsection
